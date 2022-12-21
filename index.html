@@ -20,9 +20,7 @@
     <main>
         <div class="container py-4">
             <header class="pb-3 mb-4 border-bottom">
-                <a href="https://blackdicems.github.io/fx/" class="d-flex align-items-center text-dark text-decoration-none">
-                    <span class="fs-4">Lot Calcurator</span>
-                </a>
+                <span class="fs-4">Lot Calcurator</span>
             </header>
 
             <div class="row align-items-md-stretch">
@@ -42,8 +40,8 @@
                                 <input type="number" class="form-control" id="open_price" value="1820" step=".01">
                             </div>
                             <div class="mb-3">
-                                <label for="close_price" class="form-label">Close Price</label>
-                                <input type="number" class="form-control" id="close_price" value="1822" step=".01">
+                                <label for="stop_lost_price" class="form-label">Stop Lost Price</label>
+                                <input type="number" class="form-control" id="stop_lost_price" value="1822" step=".01">
                             </div>
                         </form>
                     </div>
@@ -67,10 +65,6 @@
                     </div>
                 </div>
             </div>
-
-            <footer class="pt-3 mt-4 text-muted border-top">
-                &copy; 2021
-            </footer>
         </div>
     </main>
 
@@ -80,7 +74,7 @@
             let initial_balance = 20000;
             let risk = 1;
             let open_price = 1820;
-            let close_price = 1822;
+            let stop_lost_price = 1822;
 
             let sl_point = $('#sl_point');
             let lost_cost = $('#lost_cost');
@@ -110,14 +104,14 @@
                 cal_3();
             });
 
-            $('#close_price').on('change', function(e) {
-                close_price = $(this).val();
+            $('#stop_lost_price').on('change', function(e) {
+                stop_lost_price = $(this).val();
                 to_sl_range();
                 cal_3();
             });
 
             function to_sl_range() {
-                to_sl_range_value = Math.abs((close_price - open_price).toFixed(2)) * 100
+                to_sl_range_value = Math.abs((stop_lost_price - open_price).toFixed(2)) * 100
                 sl_point.val(to_sl_range_value);
             }
 
