@@ -1,55 +1,45 @@
-    $(document).ready(function() {
-        let initial_balance = 20000;
-        let risk = 1;
-        let open_price = 1820;
-        let stop_lost_price = 1822;
+const {
+    createApp
+} = Vue
 
-        let sl_point = $('#sl_point');
-        let lost_cost = $('#lost_cost');
-        let lot_recommend = $('#lot_recommend');
-
-        let to_sl_lost_value = 200;
-        let to_sl_range_value = 200;
-        let lot_recommend_value = 1.0;
-
-        $('#initial_balance').on('change', function(e) {
-            initial_balance = $(this).val();
-
-            to_sl_lost();
-            cal_3();
-        });
-
-        $('#risk').on('change', function(e) {
-            risk = $(this).val();
-
-            to_sl_lost();
-            cal_3();
-        });
-
-        $('#open_price').on('change', function(e) {
-            open_price = $(this).val();
-            to_sl_range();
-            cal_3();
-        });
-
-        $('#stop_lost_price').on('change', function(e) {
-            stop_lost_price = $(this).val();
-            to_sl_range();
-            cal_3();
-        });
-
-        function to_sl_range() {
-            to_sl_range_value = (Math.abs(parseFloat(open_price).toFixed(2) - parseFloat(stop_lost_price).toFixed(2)).toFixed(2) * 100).toFixed(0);
-            sl_point.val(to_sl_range_value);
+createApp({
+    data() {
+        return {
+            input_symbol: 'xauusd',
+            input_balance: 20000,
+            input_risk: 1,
+            input_open_price: 1820,
+            input_stop_lost_price: 1822,
+            pipette_value: 200,
+            lost_cost_value: 200,
+            recommend_lot_value: 0.1,
         }
-
-        function to_sl_lost() {
-            to_sl_lost_value = (initial_balance * risk) / 100;
-            lost_cost.val(to_sl_lost_value);
+    },
+    methods: {
+        input_balance_change(event) {
+            this.to_sl_lost();
+            this.main_cal();
+        },
+        input_risk_change(event) {
+            this.to_sl_lost();
+            this.main_cal();
+        },
+        input_open_price_change(event) {
+            this.to_sl_range();
+            this.main_cal();
+        },
+        input_stop_lost_price_change(event) {
+            this.to_sl_range();
+            this.main_cal();
+        },
+        to_sl_range(event) {
+            this.pipette_value = (Math.abs(parseFloat(this.input_open_price).toFixed(2) - parseFloat(this.input_stop_lost_price).toFixed(2)).toFixed(2) * 100).toFixed(0);
+        },
+        to_sl_lost(event) {
+            this.lost_cost_value = (this.input_balance * this.input_risk) / 100;
+        },
+        main_cal(event) {
+            this.recommend_lot_value = (this.lost_cost_value / this.pipette_value).toFixed(2);
         }
-
-        function cal_3() {
-            let lot_recommend_value = (to_sl_lost_value / to_sl_range_value).toFixed(2);
-            lot_recommend.val(lot_recommend_value);
-        }
-    });
+    }
+}).mount('#app')
