@@ -38,7 +38,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input_risk" class="form-label">Risk (%)</label>
-                                <input type="number" v-model="input_risk" @change="input_risk_change" class="form-control" id="input_risk" placeholder="%" min="1" max="100">
+                                <input type="range" v-model="input_risk" @change="input_risk_change" class="form-control" id="input_risk" placeholder="%" min="1" max="100">
                             </div>
                             <div class="mb-3">
                                 <label for="input_open_price" class="form-label">Entry Price</label>
