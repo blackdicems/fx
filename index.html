@@ -7,10 +7,11 @@
     <meta name="description" content="Forex lot Calculator">
     <meta name="author" content="BlackdiceMs">
     <link rel="icon" type="image/x-icon" href="./img/bull.png">
-    <title>Document</title>
+    <title>Size Position Calculator</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script class="powered" type="text/javascript" src="https://widgets.myfxbook.com/scripts/fxMarkets.js"></script>
 
 </head>
 
@@ -18,7 +19,7 @@
     <main id="app">
         <div class="container py-4">
             <header class="pb-3 mb-4 border-bottom">
-                <span class="fs-4">XAUUSD Calculator</span>
+                <span class="fs-4">Size Position Calculator</span>
             </header>
 
             <div class="row align-items-md-stretch">
@@ -28,11 +29,12 @@
                             <div class="mb-3">
                                 <label for="input_symbol" class="form-label">Symbol</label>
                                 <select class="form-select" v-model="current.input_symbol" @change="input_symbol_change">
-                                    <option value="" selected disabled>Please select</option>
-                                    <option value="xauusd_2">XAUUSD</option>
-                                    <option value="xauusd_3">XAUUSD (Exness)</option>
-                                    <option value="eurusd_5">EURUSD</option>
-                                    <option value="us30_1">US30</option>
+                                    <optgroup label="FOREX">
+                                        <option value="100000">EURUSD</option>
+                                    </optgroup>
+                                    <optgroup label="METAL">
+                                        <option value="100">XAUUSD</option>
+                                    </optgroup>
                                   </select>
                             </div>
                             <div class="mb-3">
@@ -45,11 +47,11 @@
                             </div>
                             <div class="mb-3">
                                 <label for="input_open_price" class="form-label">Entry Price</label>
-                                <input type="number" v-model="current.input_open_price" @change="input_open_price_change" class="form-control" id="input_open_price">
+                                <input type="number" v-model="current.input_open_price" @change="input_open_price_change" class="form-control" id="input_open_price" step="0.01">
                             </div>
                             <div class="mb-3">
                                 <label for="input_stop_lost_price" class="form-label">Stop Lost Price</label>
-                                <input type="number" v-model="current.input_stop_lost_price" @change="input_stop_lost_price_change" class="form-control" id="input_stop_lost_price">
+                                <input type="number" v-model="current.input_stop_lost_price" @change="input_stop_lost_price_change" class="form-control" id="input_stop_lost_price" step="0.01">
                             </div>
                         </form>
                     </div>
@@ -81,9 +83,20 @@
                 </div>
 
             </div>
+
+            <div class="row">
+                <div style="font-size: 10px">
+                    <a href="https://www.myfxbook.com/" title="Markets" class="myfxbookLink" target="_self" rel="noopener"> Markets</a> by Myfxbook.com
+                </div>
+
+                <script type="text/javascript">
+                    showMarketsWidget()
+                </script>
+
+            </div>
         </div>
     </main>
-    <script src="main.min.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
